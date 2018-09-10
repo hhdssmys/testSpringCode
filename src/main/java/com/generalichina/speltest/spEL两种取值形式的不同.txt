@@ -1,0 +1,51 @@
+1 @Value("#{}")   SpEL表达式
+@Value("#{}") 表示SpEl表达式通常用来获取bean的属性，或者调用bean的某个方法。当然还有可以表示常量
+@RestController
+@RequestMapping("/login")
+@Component
+public class LoginController {
+	
+	@Value("#{1}")
+	private int number; //获取数字 1
+	
+	@Value("#{'Spring Expression Language'}") //获取字符串常量
+	private String str;
+	
+	@Value("#{dataSource.url}") //获取bean的属性
+	private String jdbcUrl;
+	
+	@Autowired
+	private DataSourceTransactionManager transactionManager;
+ 
+	@RequestMapping("login")
+	public String login(String name,String password) throws FileNotFoundException{
+		System.out.println(number);
+		System.out.println(str);
+		System.out.println(jdbcUrl);
+		return "login";
+	}
+}
+当bean通过@Value(#{""}) 获取其他bean的属性，或者调用其他bean的方法时，只要该bean (Beab_A)能够访问到被调用的bean(Beab_B)，
+即要么Beab_A 和Beab_B在同一个容器中，或者Beab_B所在容器是Beab_A所在容器的父容器。(拿我上面贴出来的代码为例在springMvc项目中，
+dataSource这个bean一般是在springContext.xml文件中申明的，而loginController这个bean一般是在springMvc.xml文件中申明的，
+虽然这两个bean loginController和dataSource不在一个容器，但是loginController所在容器继承了dataSource所在的容器，所以在 
+loginController这个bean中通过@Value("#{dataSource.url}")能够获取到dataSource的url属性)。
+
+（1）个人总结：#{}该形式默认可以跨容器访问bean，只要容器可以相互访问
+
+2 @Value("${}") 
+
+通过@Value("${}") 可以获取对应属性文件中定义的属性值。假如我有一个sys.properties文件 里面规定了一组值： web.view.prefix =/WEB-INF/views/
+
+在springMvc.xml文件中引入下面的代码既即以在 该容器内通过@Value("${web.view.prefix}")获取这个字符串。需要指出的是，如果只在springMvc.xml引入下面代码，
+只能在springMvc.xml文件中扫描或者注册的bean中才能通过@Value("${web.view.prefix}")获取这个字符串，
+其他未在springMvc.xml扫描和定义的bean必须在相应的xml文件中引入下面代码才能使用@Value("${}”)表达式
+<!-- 加载配置属性文件 -->
+	<context:property-placeholder
+		ignore-unresolvable="true" location="classpath:sys.properties" />
+然后再controller文件中通过下面代码即可获取“”/WEB-INF/views/“”这个字符串
+	@Value("${web.view.prefix}")
+	private String prefix; 
+
+（2）个人总结：#{}该形式默认不可以跨容器访问bean，必须手动设置一些条件
+
