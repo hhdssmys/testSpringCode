@@ -1,6 +1,30 @@
 package com.generalichina.scopetest;
 
-
+/**
+ * ━━━━━━oooo━━━━━━
+ * 　　　┏┓　　　┏┓
+ * 　　┏┛┻━━━┛┻┓
+ * 　　┃　　　　　　　┃
+ * 　　┃　　　━　　　┃
+ * 　　┃　┳┛　┗┳　┃
+ * 　　┃　　　　　　　┃
+ * 　　┃　　　┻　　　┃
+ * 　　┃　　　　　　　┃
+ * 　　┗━┓　　　┏━┛
+ * 　　　　┃　　　┃stay hungry stay foolish
+ * 　　　　┃　　　┃Code is far away from bug with the animal protecting
+ * 　　　　┃　　　┗━━━┓
+ * 　　　　┃　　　　　　　┣┓
+ * 　　　　┃　　　　　　　┏┛
+ * 　　　　┗┓┓┏━┳┓┏┛
+ * 　　　　　┃┫┫　┃┫┫
+ * 　　　　　┗┻┛　┗┻┛
+ * ━━━━━━萌萌哒━━━━━━
+ * Module Desc:com.zjp.producer.annotations
+ * User: zjprevenge
+ * Date: 2017/1/23
+ * Time: 18:41
+ */
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main {
